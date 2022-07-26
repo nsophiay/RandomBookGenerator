@@ -29,6 +29,11 @@
 
 		}
 
+		#bookList{
+			border:1px solid #dbdbdb;
+			padding:4px;
+		}
+
 
 	</style>
 
@@ -38,7 +43,7 @@
 
 			<div class="row">
 				<div class="column-lg-12 text-center p-5 heading"><h2>Random Book Generator</h2></div>
-			</div>
+			</div> <!-- Close row -->
 			<div class="row justify-content-center align-items-center">
 				<div class="col-lg-4">
 					<div class="form-group p-3 text-center">
@@ -48,8 +53,8 @@
 						</form>
 					</div>
 				</div>
-			</div>
-			<div class="row justify-content-center align-items-center">
+			</div> <!-- Close row -->
+			<div class="row justify-content-center">
 				<div class="col-lg-4">
 					<div class="text-center p-2"><h5>Set your critera</h5></div>
 					<form id="criteria">
@@ -81,7 +86,13 @@
 									<li><a class="dropdown-item" href="#">Any</a></li>
 								</ul>
 							</div>
+						</div>
 
+						<div class="form-group p-2">
+							<input type="checkbox" id="fiction" name="fiction" value="Fiction">
+							<label for="fiction">Fiction</label>
+							<input type="checkbox" id="nonfiction" name="nonfiction" value="Non-fiction">
+							<label for="nonfiction">Non-fiction</label>
 						</div>
 
 						<div class="form-group p-2">
@@ -89,6 +100,14 @@
 						</div>
 
 					</form> <!-- Close criteria form -->
+				</div>
+				<div class="col-lg-4">
+					
+					<div class="text-center p-2"><h5>List of books</h5></div>
+					<div id="bookList">
+						<p>No books yet. Click on the <i>Generate books</i> button to generate a list.</p>
+					</div>
+
 				</div>
 
 			</div> <!-- Close row -->

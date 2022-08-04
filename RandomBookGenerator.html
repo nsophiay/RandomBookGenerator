@@ -8,34 +8,16 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>Random Book Generator</title>
 
+		<link rel="stylesheet" href="main.css">
+		<!-- Code for slider taken from https://codingartistweb.com/2021/06/double-range-slider-html-css-javascript/ -->
+		<link rel="stylesheet" href="slider-style.css">
+
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
 		<script type="module" src="./main.js"></script>
 
 	</head>
-
-	<style>
-
-		.heading{
-			
-			background-color:#baceff;
-
-		}
-
-		#criteria{
-
-			border:1px solid #dbdbdb;
-
-		}
-
-		#bookList{
-			border:1px solid #dbdbdb;
-			padding:4px;
-		}
-
-
-	</style>
 
 	<body>
 		
@@ -54,9 +36,10 @@
 					</div>
 				</div>
 			</div> <!-- Close row -->
+			<div id="errorSpot"></div>
 			<div class="row justify-content-center">
-				<div class="col-lg-4">
-					<div class="text-center p-2"><h5>Set your critera</h5></div>
+				<div class="col-lg-4" id="criteriaBox">
+					<div class="text-center p-2"><h5>Set your criteria</h5></div>
 					<form id="criteria">
 						<div class="form-group p-2">
 							<label>Number of books to generate</label>
@@ -82,26 +65,48 @@
 								<ul class="dropdown-menu">
 									<li><a class="dropdown-item" href="#">3 stars+</a></li>
 									<li><a class="dropdown-item" href="#">4 stars+</a></li>
-									<li><a class="dropdown-item" href="#">5 stars</a></li>
 									<li><a class="dropdown-item" href="#">Any</a></li>
 								</ul>
 							</div>
 						</div>
 
+						
 						<div class="form-group p-2">
-							<input type="checkbox" id="fiction" name="fiction" value="Fiction">
-							<label for="fiction">Fiction</label>
-							<input type="checkbox" id="nonfiction" name="nonfiction" value="Non-fiction">
-							<label for="nonfiction">Non-fiction</label>
+							<label>Number of pages</label>
+							<div class="wrapper">
+								<div class="values">
+									<span id="range1">
+										0
+									</span>
+									<span> &dash; </span>
+									<span id="range2">
+										100
+									</span>
+								</div>
+								<div class="slider-container">
+									<div class="slider-track"></div>
+									<input type="range" min="0" max="5000" value="0" id="slider-1" oninput="slideOne()">
+									<input type="range" min="0" max="5000" value="5000" id="slider-2" oninput="slideTwo()">
+								</div>
+							</div>
 						</div>
 
-						<div class="form-group p-2">
-							<input type="button" id="submitButton" value="Generate books">
+						<div class="form-group p-2" id="shelfChoicesMandatory">
+							<p>Shelves</p>
+							<p><small>ALL from:</small></p>
+							<p id="message"><small><i>Please upload a GoodReads library to get the list of possible shelves</i></small></p>
+							<!-- Filled in by createCheckboxes method in JS -->
 						</div>
 
+						<div class="form-group p-2" id="shelfChoices">
+							<p><small>ANY from:</small></p>
+							<p id="message"><small><i>Please upload a GoodReads library to get the list of possible shelves</i></small></p>
+							<!-- Filled in by createCheckboxes method in JS -->
+						</div>
 					</form> <!-- Close criteria form -->
 				</div>
-				<div class="col-lg-4">
+				
+				<div class="col-lg-4" id="booksBox">
 					
 					<div class="text-center p-2"><h5>List of books</h5></div>
 					<div id="bookList">
@@ -111,9 +116,17 @@
 				</div>
 
 			</div> <!-- Close row -->
+			<div class="row justify-content-center align-items-center p-2">
+				<div class="col-lg-1">
+					<div class="form-group p-2">
+						<input type="button" id="submitButton" value="Generate books">
+					</div>
+				</div>
+			</div>
 
 		</div> <!-- Close container -->
 		
+		<script src="slider.js"></script>
 	</body>
 
 </html>

@@ -1,0 +1,56 @@
+.heading{
+			
+    background-color:#000000;
+    color:#fff;
+
+}
+
+#errorSpot{
+    z-index:10000000;
+    position:fixed;
+    top:30%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+#criteriaBox, #booksBox{
+    height: 61vh;
+    overflow-y:scroll;
+}
+
+/* Scroll bar from https://codepen.io/aurer/pen/kGRNVw */
+
+#criteriaBox::-webkit-scrollbar, #booksBox::-webkit-scrollbar{
+    width: 6px;
+    height: 6px;
+}
+
+#criteriaBox::-webkit-scrollbar-track, #booksBox::-webkit-scrollbar-track{
+    border-radius: 10px;
+    background: rgba(0,0,0,0.1);
+}
+
+#criteriaBox::-webkit-scrollbar-thumb, #booksBox::-webkit-scrollbar-thumb{
+    border-radius: 10px;
+    background: rgba(0,0,0,0.2);
+}
+
+#criteriaBox::-webkit-scrollbar-thumb:hover, #booksBox::-webkit-scrollbar-thumb:hover{
+    background: rgba(0,0,0,0.4);
+}
+
+#criteriaBox::-webkit-scrollbar-thumb:active, #booksBox::-webkit-scrollbar-thumb:active{
+    background: rgba(0,0,0,.9);
+}
+
+#criteria{
+
+    border:1px solid #dbdbdb;
+
+}
+
+#bookList{
+    border:1px solid #dbdbdb;
+    padding:4px;
+}
+

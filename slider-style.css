@@ -7,17 +7,10 @@
     font-family: "Poppins",sans-serif;
 }
 
-.wrapper{
-    position: relative;
-    width: 63vmin;
-    background-color: #ffffff;
-    border-radius: 10px;
-}
-
 /* Container for the slider itself, excluding the value box */
 .slider-container{
     position: relative;
-    width: 95%;
+    width: 30vw;
     margin-top: 15px;
 }
 

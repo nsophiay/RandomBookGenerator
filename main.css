@@ -1,8 +1,38 @@
-.heading{
-			
-    background-color:#000000;
-    color:#fff;
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&family=Roboto&display=swap');
 
+#bootstrap-override label, #bootstrap-override p{
+    font-family:'Roboto', sans-serif;
+}
+
+
+.heading{
+	
+    padding-top:30px;
+    padding-bottom:30px;
+    background-color:#000000;
+
+}
+
+.heading h2, h5{
+    font-family: 'IBM Plex Mono', monospace;
+}
+
+#headingBox{
+    background-color:#fff;
+    color:#000;
+    font-size:24px;
+    padding-top:25px;
+    padding-bottom:25px;
+    z-index:1000;
+}
+
+.line{
+    background-color:#fff;
+    height:4px;
+    margin-left:-9px;
+    width:110%;
+    position:absolute;
+    z-index:0;
 }
 
 #errorSpot{
@@ -54,3 +84,13 @@
     padding:4px;
 }
 
+#bookList a{
+    color:rgb(25, 76, 124);
+    text-decoration:none;
+    font-weight:bold;
+}
+
+#bookList a:hover{
+    color:#fff;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+}

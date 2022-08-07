@@ -1,7 +1,7 @@
 import { parse } from "./csv-parser/index.js";
 
 const reader = new FileReader();
-const TITLE=1, AUTHOR=2, RATING=8, NUMPAGES=11, YEARPUBLISHED=12, READ=14, DATEADDED=15, SHELVES=16;
+const ID=0, TITLE=1, AUTHOR=2, RATING=8, NUMPAGES=11, YEARPUBLISHED=12, READ=14, DATEADDED=15, SHELVES=16;
 var parsedCSV;
 var numBooks, timePeriod, rating;
 var numPagesMin, numPagesMax;
@@ -12,7 +12,7 @@ document.getElementById("csv").addEventListener("input", () => {
             reader.readAsText(document.getElementById("csv").files[0]);
 }, false);
 
-document.getElementById("submitButton").addEventListener("click", generate, false);
+document.getElementById("submitButton").addEventListener("click", getCriteria, false);
 
 // Change button text when a selection from the dropdown menu is made
 $(function(){
@@ -111,15 +111,28 @@ function printBookInfo(array){
 // Taken from https://archive.ph/uCvft
 function createList(array) {
 
-    // Create the list element:
+    var url = "https://www.goodreads.com/book/show/";
+
+    // Create the list element
     let list = document.createElement('ol');
 
     for (let i = 0; i < array.length; i++) {
-        // Create the list item:
-        let item = document.createElement('li');
 
-        // Set its contents:
-        item.appendChild(document.createTextNode(printBookInfo(array[i])));
+        let book = array[i];
+        let auth = " by " + book[AUTHOR];
+        let fullURL = url + book[ID];
+
+        // Create the list item
+        let item = document.createElement('li');
+        
+        // Create the link item
+        let link = document.createElement('a');
+        link.setAttribute("href", fullURL);
+        link.setAttribute("target", "_blank");
+        link.innerHTML = book[TITLE];
+
+        item.appendChild(link);
+        item.appendChild(document.createTextNode(auth));
 
         // Add it to the list:
         list.appendChild(item);
@@ -242,8 +255,12 @@ function validateInputs(){
         errorMessage = "A shelf that you specified in the ALL form has also been specified in the ANY form. Please fix this and try again.";
         noError = false;
     }
-    else if(selectedShelvesM.includes("fiction") && selectedShelvesM.includes("non-fiction")){
-        errorMessage = "You have specified two mutually exclusive shelves in the ALL form. Please fix this and try again.";
+    else if((selectedShelvesM.includes("fiction") || selectedShelves.includes("fiction")) && selectedShelvesM.includes("non-fiction")){
+        errorMessage = "You have specified two mutually exclusive shelves (fiction and non-fiction). Please fix this and try again.";
+        noError = false;
+    }
+    else if((selectedShelvesM.includes("non-fiction") || selectedShelves.includes("non-fiction")) && selectedShelvesM.includes("fiction")){
+        errorMessage = "You have specified two mutually exclusive shelves (fiction and non-fiction). Please fix this and try again.";
         noError = false;
     }
 
@@ -255,7 +272,7 @@ function validateInputs(){
 
 }
 
-function randomBooks(){
+function generateBooks(){
 
     // Generate list of random books
     var bookArray = [];
@@ -298,9 +315,11 @@ function randomBooks(){
         var checkMandatoryShelves = true, checkShelves = true;
 
         if(selectedShelvesM.length > 0){
+            // Is the book in every shelf marked as mandatory?
             checkMandatoryShelves = selectedShelvesM.every(elem => bookShelves.includes(elem));
         }
         if(selectedShelves.length > 0){
+            // Is the book in any of the shelves marked as optional?
             checkShelves = selectedShelves.some(elem => bookShelves.includes(elem));
         }
         const withinShelves = checkMandatoryShelves && checkShelves;
@@ -308,7 +327,7 @@ function randomBooks(){
         const meetsCriteria = withinDateRange && !read && withinRating && withinPages && withinShelves;
 
         // Check if the book is within the specified criteria
-        if(meetsCriteria){ 
+        if(meetsCriteria && !bookArray.includes(selectedBook)){ 
             bookArray.push(selectedBook);
         }
 
@@ -328,7 +347,7 @@ function randomBooks(){
 
 }
 
-function generate(){
+function getCriteria(){
 
     // Initialize criteria
     let criteriaForm = document.forms["criteria"];
@@ -352,7 +371,7 @@ function generate(){
 
     if(validateInputs()){
         console.log("You passed: " + numBooks + ", " + timePeriod + ", " + rating + ", " + selectedShelves.toString() + ", num pages: " + numPagesMin + "-" + numPagesMax);
-        randomBooks();
+        generateBooks();
     }
 
 }

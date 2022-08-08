@@ -1,6 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&family=Roboto:wght@400;700&display=swap');
 
-#bootstrap-override label, #bootstrap-override p{
+#bootstrap-override label, #bootstrap-override p, #bootstrap-override a, #bootstrap-override li{
     font-family:'Roboto', sans-serif;
 }
 
@@ -30,7 +30,7 @@
     background-color:#fff;
     height:4px;
     margin-left:-9px;
-    width:110%;
+    width:100%;
     position:absolute;
     z-index:0;
 }
@@ -91,6 +91,45 @@
 }
 
 #bookList a:hover{
-    color:#fff;
-    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+    text-decoration:underline solid;
+}
+
+#shelfChoicesMandatory input, #shelfChoices input{
+    margin-right:3px;
+}
+
+.shelfTables{
+    table-layout: fixed;
+}
+
+.shelfTables td{
+    width:10%;
+}
+
+
+#submitButton{
+    font-family: 'Roboto', sans-serif;
+    padding:7px;
+    line-height: 1;
+    font-size: 18px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    border: 2px solid #0275d8;
+    background: #fff;
+    color: #0275d8;
+    border-radius: 30px;
+    cursor: pointer;
+    overflow: hidden;
+    transition: all .35s;
+    
+    position: absolute;
+    margin-top:30px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#submitButton:hover{
+    background: #000;
+    color: #fff;
+    border: 2px solid #000;
 }

@@ -146,6 +146,7 @@ function createCheckboxes(formGroupID, array, identifier) {
 
     document.getElementById("message").remove();
     var table = document.createElement('table');
+    table.setAttribute("class", "shelfTables");
     var row;
 
     for (let i = 0; i < array.length; i++) {

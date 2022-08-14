@@ -14,6 +14,11 @@ document.getElementById("csv").addEventListener("input", () => {
 
 document.getElementById("submitButton").addEventListener("click", getCriteria, false);
 
+// Enable tooltips
+$(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+})
+
 // Change button text when a selection from the dropdown menu is made
 $(function(){
     $(".dropdown-menu li a").click(function(){
@@ -144,13 +149,20 @@ function createList(array) {
 
 function createCheckboxes(formGroupID, array, identifier) {
 
-    document.getElementById("message").remove();
+    // Remove explanatory message if it exists
+    const firstTime = document.getElementById("message") != null;
+    if(firstTime){
+        document.getElementById("message").remove();
+    }
+    
+    // Create table
     var table = document.createElement('table');
     table.setAttribute("class", "shelfTables");
     var row;
 
     for (let i = 0; i < array.length; i++) {
 
+        // Create a new row if the row is already full with 2 cells
         if(i%2==0){
             row = document.createElement('tr');
         }
@@ -185,7 +197,7 @@ function createCheckboxes(formGroupID, array, identifier) {
 
 }
 
-function createError(parentElement, message){
+function createError(message){
 
     let errorDiv = document.createElement('div');
     errorDiv.setAttribute("class", "alert alert-danger alert-dismissible fade show");
@@ -194,17 +206,12 @@ function createError(parentElement, message){
 
     let closeButton = document.createElement('button');
     closeButton.setAttribute("type", "button");
-    closeButton.setAttribute("class", "close");
+    closeButton.setAttribute("class", "btn-close");
     closeButton.setAttribute("data-bs-dismiss", "alert");
     closeButton.setAttribute("aria-label", "Close");
 
-    let spanElement = document.createElement('span');
-    spanElement.setAttribute("aria-hidden", "true");
-    spanElement.innerHTML = "&times;";
-
-    closeButton.appendChild(spanElement);
     errorDiv.appendChild(closeButton);
-    parentElement.appendChild(errorDiv);
+    document.getElementById("errorSpot").appendChild(errorDiv);
 
 }
 
@@ -222,6 +229,8 @@ function processCSV(){
     encounteredShelf.set("to-buy", true);
     encounteredShelf.set("books-to-re-read", true);
     encounteredShelf.set("have-re-read", true);
+
+    shelves = []; // Make sure array is empty
 
     // Get list of distinct shelves
     for(var i = 0; i < parsedCSV.length; i++){
@@ -266,16 +275,16 @@ function validateInputs(){
     }
 
     if(!noError){
-        createError(document.getElementById("errorSpot"), errorMessage);
+        createError(errorMessage);
     }
     
     return noError;
 
 }
 
+// This function will generate a list of books based on the specified criteria
 function generateBooks(){
 
-    // Generate list of random books
     var bookArray = [];
     var encounteredNumbers = new Map();
     let iteration = 0;
@@ -348,7 +357,15 @@ function generateBooks(){
 
 }
 
+// This function is called when you click the 'Generate books' button
+// If a GoodReads input file has been uploaded, it will extract the criteria specified in the form
+// and call a function that generates a list of random books based on that criteria
 function getCriteria(){
+
+    if(parsedCSV == null){
+        createError("Please upload a GoodReads library in order to generate a list of books.");
+        return;
+    }
 
     // Initialize criteria
     let criteriaForm = document.forms["criteria"];

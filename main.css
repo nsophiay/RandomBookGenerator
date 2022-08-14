@@ -106,14 +106,13 @@
     width:10%;
 }
 
-
+/* Button style from https://codepen.io/thelaazyguy/pen/mMVEmL */
 #submitButton{
     font-family: 'Roboto', sans-serif;
-    padding:7px;
+    padding:10px;
     line-height: 1;
     font-size: 18px;
     font-weight: bold;
-    letter-spacing: 1px;
     border: 2px solid #0275d8;
     background: #fff;
     color: #0275d8;
@@ -132,4 +131,9 @@
     background: #000;
     color: #fff;
     border: 2px solid #000;
+}
+
+.btn-close{
+    width:25px;
+    background-size: 0.9em;
 }

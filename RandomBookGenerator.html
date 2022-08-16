@@ -48,68 +48,87 @@
 				<div class="col-lg-4" id="criteriaBox">
 					<div class="text-center p-2"><h5>Set your criteria</h5></div>
 					<form id="criteria">
-						<div class="form-group p-2">
-							<label>Number of books to generate</label>
-							<input type="number" name="numBooks" min="1" max="100" value="10" class="form-control"/>
-						</div>
-						<div class="form-group p-2">
-							<label>Recency</label>
-							<div class="dropdown"><button class="btn btn-secondary dropdown-toggle" type="button" id="recency" value="Select a time period" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Select a time period</button>
-								<ul class="dropdown-menu">
-									<li><a class="dropdown-item" href="#">Past month</a></li>
-									<li><a class="dropdown-item" href="#">Past 3 months</a></li>
-									<li><a class="dropdown-item" href="#">Past 6 months</a></li>
-									<li><a class="dropdown-item" href="#">Past year</a></li>
-									<li><a class="dropdown-item" href="#">All time</a></li>
-								</ul>
-							</div>
-						</div>
-						
-						<div class="form-group p-2">
+						<table>
+							<tr> <!-- First table row -->
+								<td colspan="3">
+								<div class="form-group p-2">
+									<label>Number of books to generate:</label>
+									<input type="number" name="numBooks" min="1" max="100" value="10" class="form-control"/>
+								</div>
+								</td>
+							</tr>
+							<tr> <!-- Second table row -->
+								<td>
+								<div class="form-group p-2">
+									<label>Recency:</label>
+									<div class="dropdown"><button class="btn btn-secondary dropdown-toggle" type="button" id="recency" value="Select a time period" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Select a time period</button>
+										<ul class="dropdown-menu">
+											<li><a class="dropdown-item" href="#">Past month</a></li>
+											<li><a class="dropdown-item" href="#">Past 3 months</a></li>
+											<li><a class="dropdown-item" href="#">Past 6 months</a></li>
+											<li><a class="dropdown-item" href="#">Past year</a></li>
+											<li><a class="dropdown-item" href="#">All time</a></li>
+										</ul>
+									</div>
+								</div>
+								</td>
+								<td>
+								<div class="form-group p-2">
 
-							<label>Rating</label>
-							<div class="dropdown"><button class="btn btn-secondary dropdown-toggle" type="button" id="rating" value="Select a rating" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Select a rating</button>
-								<ul class="dropdown-menu">
-									<li><a class="dropdown-item" href="#">3 stars+</a></li>
-									<li><a class="dropdown-item" href="#">4 stars+</a></li>
-									<li><a class="dropdown-item" href="#">Any</a></li>
-								</ul>
-							</div>
-						</div>
-
-						
-						<div class="form-group p-2">
-							<label>Number of pages</label>
+									<label>Rating:</label>
+									<div class="dropdown"><button class="btn btn-secondary dropdown-toggle" type="button" id="rating" value="Select a rating" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Select a rating</button>
+										<ul class="dropdown-menu">
+											<li><a class="dropdown-item" href="#">3 stars+</a></li>
+											<li><a class="dropdown-item" href="#">4 stars+</a></li>
+											<li><a class="dropdown-item" href="#">Any</a></li>
+										</ul>
+									</div>
+								</div>
+								</td>
+								<td>
+									<!--<input type="checkbox">Available in-store at Indigo? -->
+								</td>
+							</tr>
+							<tr> <!-- Third table row -->
+								<td colspan="3">
+								<div class="form-group p-2">
+									<label>Number of pages:</label>
+									
+										<div class="values">
+											<span id="range1">
+												0
+											</span>
+											<span> &dash; </span>
+											<span id="range2">
+												100
+											</span>
+										</div>
+										<div class="slider-container">
+											<div class="slider-track"></div>
+											<input type="range" min="0" max="5000" value="0" id="slider-1" oninput="slideOne()">
+											<input type="range" min="0" max="5000" value="5000" id="slider-2" oninput="slideTwo()">
+										</div>
 							
-								<div class="values">
-									<span id="range1">
-										0
-									</span>
-									<span> &dash; </span>
-									<span id="range2">
-										100
-									</span>
 								</div>
-								<div class="slider-container">
-									<div class="slider-track"></div>
-									<input type="range" min="0" max="5000" value="0" id="slider-1" oninput="slideOne()">
-									<input type="range" min="0" max="5000" value="5000" id="slider-2" oninput="slideTwo()">
+								</td>
+							</tr>
+							<tr> <!-- Fourth table row -->
+								<td colspan="3">
+								<div class="form-group p-2" id="shelfChoicesMandatory">
+									<p>Shelves:</p>
+									<p><small>ALL from:</small></p>
+									<p id="message"><small><i>Please upload a GoodReads library to get the list of possible shelves</i></small></p>
+									<!-- Filled in by createCheckboxes method in JS -->
 								</div>
-					
-						</div>
 
-						<div class="form-group p-2" id="shelfChoicesMandatory">
-							<p>Shelves</p>
-							<p><small>ALL from:</small></p>
-							<p id="message"><small><i>Please upload a GoodReads library to get the list of possible shelves</i></small></p>
-							<!-- Filled in by createCheckboxes method in JS -->
-						</div>
-
-						<div class="form-group p-2" id="shelfChoices">
-							<p><small>ANY from:</small></p>
-							<p id="message"><small><i>Please upload a GoodReads library to get the list of possible shelves</i></small></p>
-							<!-- Filled in by createCheckboxes method in JS -->
-						</div>
+								<div class="form-group p-2" id="shelfChoices">
+									<p><small>ANY from:</small></p>
+									<p id="message"><small><i>Please upload a GoodReads library to get the list of possible shelves</i></small></p>
+									<!-- Filled in by createCheckboxes method in JS -->
+								</div>
+								</td>
+							</tr>
+						</table>
 					</form> <!-- Close criteria form -->
 				</div>
 				
@@ -117,7 +136,7 @@
 					
 					<div class="text-center p-2"><h5>List of books</h5></div>
 					<div id="bookList">
-						<p>No books yet. Click on the <i>Generate books</i> button to generate a list.</p>
+						<p style="text-align:center;">No books yet. Click on the <i>Generate books</i> button to generate a list.</p>
 					</div>
 
 				</div>

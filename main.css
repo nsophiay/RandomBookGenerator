@@ -82,6 +82,8 @@
 #bookList{
     border:1px solid #dbdbdb;
     padding:4px;
+    height: 55.75vh;
+    line-height:27px;
 }
 
 #bookList a{
@@ -94,7 +96,7 @@
     text-decoration:underline solid;
 }
 
-#shelfChoicesMandatory input, #shelfChoices input{
+#criteriaBox input[type='checkbox']{
     margin-right:3px;
 }
 

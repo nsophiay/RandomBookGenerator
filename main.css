@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&family=Roboto:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&family=Roboto:wght@300;400;500;600;700&display=swap');
 
 #bootstrap-override label, #bootstrap-override p, #bootstrap-override a, #bootstrap-override li{
     font-family:'Roboto', sans-serif;
@@ -43,47 +43,37 @@
     transform: translateX(-50%);
 }
 
-#criteriaBox, #booksBox{
-    height: 61vh;
-    overflow-y:scroll;
-}
-
 /* Scroll bar from https://codepen.io/aurer/pen/kGRNVw */
 
-#criteriaBox::-webkit-scrollbar, #booksBox::-webkit-scrollbar{
+#criteriaList::-webkit-scrollbar, #bookList::-webkit-scrollbar{
     width: 6px;
     height: 6px;
 }
 
-#criteriaBox::-webkit-scrollbar-track, #booksBox::-webkit-scrollbar-track{
+#criteriaList::-webkit-scrollbar-track, #bookList::-webkit-scrollbar-track{
     border-radius: 10px;
     background: rgba(0,0,0,0.1);
 }
 
-#criteriaBox::-webkit-scrollbar-thumb, #booksBox::-webkit-scrollbar-thumb{
+#criteriaList::-webkit-scrollbar-thumb, #bookList::-webkit-scrollbar-thumb{
     border-radius: 10px;
     background: rgba(0,0,0,0.2);
 }
 
-#criteriaBox::-webkit-scrollbar-thumb:hover, #booksBox::-webkit-scrollbar-thumb:hover{
+#criteriaList::-webkit-scrollbar-thumb:hover, #bookList::-webkit-scrollbar-thumb:hover{
     background: rgba(0,0,0,0.4);
 }
 
-#criteriaBox::-webkit-scrollbar-thumb:active, #booksBox::-webkit-scrollbar-thumb:active{
+#criteriaList::-webkit-scrollbar-thumb:active, #bookList::-webkit-scrollbar-thumb:active{
     background: rgba(0,0,0,.9);
 }
 
-#criteria{
-
-    border:1px solid #dbdbdb;
-
-}
-
-#bookList{
+#bookList, #criteriaList{
     border:1px solid #dbdbdb;
     padding:4px;
     height: 55.75vh;
     line-height:27px;
+    overflow-y:scroll;
 }
 
 #bookList a{
@@ -98,6 +88,10 @@
 
 #criteriaBox input[type='checkbox']{
     margin-right:3px;
+}
+
+.labels{
+    
 }
 
 .shelfTables{

@@ -15,9 +15,9 @@ document.getElementById("csv").addEventListener("input", () => {
 document.getElementById("submitButton").addEventListener("click", getCriteria, false);
 
 // Enable tooltips
-$(function () {
-    $('[data-toggle="tooltip"]').tooltip()
-})
+$(document).ready(function() {
+    $("body").tooltip({ selector: '[data-toggle=tooltip]' });
+});
 
 // Change button text when a selection from the dropdown menu is made
 $(function(){
@@ -129,11 +129,16 @@ function createList(array) {
 
         // Create the list item
         let item = document.createElement('li');
-        
+
         // Create the link item
         let link = document.createElement('a');
         link.setAttribute("href", fullURL);
         link.setAttribute("target", "_blank");
+        // Set up tooltip
+        link.setAttribute("data-toggle", "tooltip");
+        link.setAttribute("data-placement", "top");
+        link.setAttribute("data-html", true);
+        link.setAttribute("title", book[TITLE]);
         link.innerHTML = book[TITLE];
 
         item.appendChild(link);
@@ -318,7 +323,7 @@ function generateBooks(){
         const withinRating = selectedBook[RATING] >= determineRating(rating);
 
         // Right number of pages?
-        const withinPages = selectedBook[NUMPAGES] >= numPagesMin && selectedBook[NUMPAGES] <= numPagesMax;
+        const withinPages = (selectedBook[NUMPAGES] >= numPagesMin) && (selectedBook[NUMPAGES] <= numPagesMax);
 
         // Right shelves?
         let bookShelves = selectedBook[SHELVES].split(", ");
@@ -333,11 +338,11 @@ function generateBooks(){
             checkShelves = selectedShelves.some(elem => bookShelves.includes(elem));
         }
         const withinShelves = checkMandatoryShelves && checkShelves;
-
-        const meetsCriteria = withinDateRange && !read && withinRating && withinPages && withinShelves;
+        
+        const meetsCriteria = withinDateRange && (!read) && withinRating && withinPages && withinShelves;
 
         // Check if the book is within the specified criteria
-        if(meetsCriteria && !bookArray.includes(selectedBook)){ 
+        if(meetsCriteria && !bookArray.includes(selectedBook)){
             bookArray.push(selectedBook);
         }
 
@@ -369,11 +374,11 @@ function getCriteria(){
 
     // Initialize criteria
     let criteriaForm = document.forms["criteria"];
-    numBooks = criteriaForm["numBooks"].value; 
+    numBooks = parseInt(criteriaForm["numBooks"].value); 
     timePeriod = document.getElementById("recency").innerHTML; 
     rating = document.getElementById("rating").innerHTML;
-    numPagesMin = document.getElementById("slider-1").value;
-    numPagesMax = document.getElementById("slider-2").value;
+    numPagesMin = parseInt(document.getElementById("slider-1").value);
+    numPagesMax = parseInt(document.getElementById("slider-2").value);
 
     let selectedShelvesMNodeList = document.querySelectorAll('input[name=shelfCheckboxesM]:checked');
     selectedShelvesM = [];

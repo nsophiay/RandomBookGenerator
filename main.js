@@ -32,53 +32,28 @@ function pickRandomNumber(lowerBound, upperBound){
    return Math.floor((Math.random() * upperBound) + lowerBound)
 }
 
-function determineTimePeriod(str){
-
-    if(str == "Select a time period"){
-        str = "All time";
-    }
+function determineTimePeriod(selectedPeriod) {
 
     var today = new Date();
-    var year = today.getFullYear(), month = today.getMonth(), day = today.getDay();
-
-    switch(str){
-
+    
+    switch (selectedPeriod) {
         case "Past month":
-            if(month == 0){
-                year--;
-                month = 11;
-            } else{
-                month--;
-            }
+            today.setMonth(today.getMonth() - 1);
             break;
         case "Past 3 months":
-            if(month <= 2){
-                year--;
-                month = 12+(month-3);
-            } else{
-                month-=3;
-            }
+            today.setMonth(today.getMonth() - 3);
             break;
         case "Past 6 months":
-            if(month <= 5){
-                year--;
-                month = 12+(month-6);
-            } else{
-                month-=6;
-            }
+            today.setMonth(today.getMonth() - 6);
             break;
         case "Past year":
-            year--;
+            today.setFullYear(today.getFullYear() - 1);
             break;
-        case "All time":
-            year = 1970;
-            month = 0;
-            day = 0;
-            break;
+        default:
+            return new Date(1970, 0, 1); // January 1, 1970
     }
 
-    return new Date(year, month, day);
-
+    return new Date(today);
 }
 
 function determineRating(str){
@@ -112,6 +87,7 @@ function printBookInfo(array){
     return str;
 
 }
+
 
 // Taken from https://archive.ph/uCvft
 function createList(array) {

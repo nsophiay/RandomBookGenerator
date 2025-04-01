@@ -53,6 +53,7 @@ function determineTimePeriod(selectedPeriod) {
             return new Date(1970, 0, 1); // January 1, 1970
     }
 
+    console.log("Searching for books before " + today.toDateString());
     return new Date(today);
 }
 
@@ -281,14 +282,13 @@ function generateBooks(){
         }
         encounteredNumbers.set(randomNumber, true);
 
-
         var selectedBook = parsedCSV[randomNumber]; // Get random book
 
         // Check if book meets specified criteria
 
         // Right date?
         var dateString = selectedBook[DATEADDED].split('/');
-        var dateAdded = new Date(dateString[0], dateString[1], dateString[2]);
+        var dateAdded = new Date(dateString[0], dateString[1] - 1, dateString[2]);
         var dateLimit = determineTimePeriod(timePeriod);
         const withinDateRange = dateAdded > dateLimit;
     

@@ -5,7 +5,7 @@ const ID=0, TITLE=1, AUTHOR=2, RATING=8, NUMPAGES=11, YEARPUBLISHED=12, READ=14,
 var parsedCSV;
 var numBooks, timePeriod, rating;
 var numPagesMin, numPagesMax;
-var selectedShelves = [], selectedShelvesM = [], shelves = [];
+var optionalShelves = [], mandatoryShelves = [], shelves = [];
 
 document.getElementById("csv").addEventListener("input", () => {
             reader.addEventListener("load", processCSV, false);
@@ -53,18 +53,14 @@ function determineTimePeriod(selectedPeriod) {
             return new Date(1970, 0, 1); // January 1, 1970
     }
 
-    console.log("Searching for books before " + today.toDateString());
+    console.log("Searching for books after " + today.toDateString());
     return new Date(today);
 }
 
-function determineRating(str){
-
-    if(str == "Select a rating"){
-        str = "Any";
-    }
+function determineRating(ratingCriteria){
 
     var rating;
-    switch(str){
+    switch(ratingCriteria){
 
         case "3 stars+":
             rating = 3;
@@ -72,20 +68,18 @@ function determineRating(str){
         case "4 stars+":
             rating = 4;
             break;
-        case "Any":
+        default:
             rating = 0;
             break;
     }
 
     return rating;
 
-
 }
 
-function printBookInfo(array){
+function printBookInfo(books){
 
-    var str = array[TITLE] + " by " + array[AUTHOR];
-    return str;
+    return books[TITLE] + " by " + books[AUTHOR];
 
 }
 
@@ -243,15 +237,15 @@ function validateInputs(){
     var errorMessage;
     var noError = true;
     
-    if(selectedShelvesM.some(elem => selectedShelves.includes(elem))){
+    if(mandatoryShelves.some(elem => optionalShelves.includes(elem))){
         errorMessage = "A shelf that you specified in the ALL form has also been specified in the ANY form. Please fix this and try again.";
         noError = false;
     }
-    else if((selectedShelvesM.includes("fiction") || selectedShelves.includes("fiction")) && selectedShelvesM.includes("non-fiction")){
+    else if((mandatoryShelves.includes("fiction") || optionalShelves.includes("fiction")) && mandatoryShelves.includes("non-fiction")){
         errorMessage = "You have specified two mutually exclusive shelves (fiction and non-fiction). Please fix this and try again.";
         noError = false;
     }
-    else if((selectedShelvesM.includes("non-fiction") || selectedShelves.includes("non-fiction")) && selectedShelvesM.includes("fiction")){
+    else if((mandatoryShelves.includes("non-fiction") || optionalShelves.includes("non-fiction")) && mandatoryShelves.includes("fiction")){
         errorMessage = "You have specified two mutually exclusive shelves (fiction and non-fiction). Please fix this and try again.";
         noError = false;
     }
@@ -305,13 +299,13 @@ function generateBooks(){
         let bookShelves = selectedBook[SHELVES].split(", ");
         var checkMandatoryShelves = true, checkShelves = true;
 
-        if(selectedShelvesM.length > 0){
+        if(mandatoryShelves.length > 0){
             // Is the book in every shelf marked as mandatory?
-            checkMandatoryShelves = selectedShelvesM.every(elem => bookShelves.includes(elem));
+            checkMandatoryShelves = mandatoryShelves.every(elem => bookShelves.includes(elem));
         }
-        if(selectedShelves.length > 0){
+        if(optionalShelves.length > 0){
             // Is the book in any of the shelves marked as optional?
-            checkShelves = selectedShelves.some(elem => bookShelves.includes(elem));
+            checkShelves = optionalShelves.some(elem => bookShelves.includes(elem));
         }
         const withinShelves = checkMandatoryShelves && checkShelves;
         
@@ -349,27 +343,29 @@ function getCriteria(){
     }
 
     // Initialize criteria
+
     let criteriaForm = document.forms["criteria"];
     numBooks = parseInt(criteriaForm["numBooks"].value); 
     timePeriod = document.getElementById("recency").innerHTML; 
     rating = document.getElementById("rating").innerHTML;
+
     numPagesMin = parseInt(document.getElementById("slider-1").value);
     numPagesMax = parseInt(document.getElementById("slider-2").value);
 
-    let selectedShelvesMNodeList = document.querySelectorAll('input[name=shelfCheckboxesM]:checked');
-    selectedShelvesM = [];
-    for (const value of selectedShelvesMNodeList.values()) {
-        selectedShelvesM.push(value.getAttribute("value"));
+    let mandatoryShelvesNodeList = document.querySelectorAll('input[name=shelfCheckboxesM]:checked');
+    mandatoryShelves = [];
+    for (const value of mandatoryShelvesNodeList.values()) {
+        mandatoryShelves.push(value.getAttribute("value"));
     }
 
-    let selectedShelvesNodeList = document.querySelectorAll('input[name=shelfCheckboxes]:checked');
-    selectedShelves = [];
-    for (const value of selectedShelvesNodeList.values()) {
-        selectedShelves.push(value.getAttribute("value"));
+    let optionalShelvesNodeList = document.querySelectorAll('input[name=shelfCheckboxes]:checked');
+    optionalShelves = [];
+    for (const value of optionalShelvesNodeList.values()) {
+        optionalShelves.push(value.getAttribute("value"));
     }
 
     if(validateInputs()){
-        console.log("You passed: " + numBooks + ", " + timePeriod + ", " + rating + ", " + selectedShelves.toString() + ", num pages: " + numPagesMin + "-" + numPagesMax);
+        console.log("You passed: " + numBooks + ", " + timePeriod + ", " + rating + ", " + optionalShelves.toString() + ", num pages: " + numPagesMin + "-" + numPagesMax);
         generateBooks();
     }
 

@@ -62,10 +62,10 @@ function determineRating(ratingCriteria){
     var rating;
     switch(ratingCriteria){
 
-        case "3 stars+":
+        case "3+ stars":
             rating = 3;
             break;
-        case "4 stars+":
+        case "4+ stars":
             rating = 4;
             break;
         default:

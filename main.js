@@ -1,9 +1,9 @@
 import { parse } from "./csv-parser/index.js";
 
 const reader = new FileReader();
-const ID=0, TITLE=1, AUTHOR=2, RATING=8, NUMPAGES=11, YEARPUBLISHED=12, READ=14, DATEADDED=15, SHELVES=16;
+const ID=0, TITLE=1, AUTHOR=2, NUMPAGES=10, YEARPUBLISHED=11, DATEADDED=14, SHELVES=15, READ=21;
 var parsedCSV;
-var numBooks, timePeriod, rating;
+var numBooks, timePeriod;
 var numPagesMin, numPagesMax;
 var optionalShelves = [], mandatoryShelves = [], shelves = [];
 
@@ -57,25 +57,6 @@ function determineTimePeriod(selectedPeriod) {
     return new Date(today);
 }
 
-function determineRating(ratingCriteria){
-
-    var rating;
-    switch(ratingCriteria){
-
-        case "3+ stars":
-            rating = 3;
-            break;
-        case "4+ stars":
-            rating = 4;
-            break;
-        default:
-            rating = 0;
-            break;
-    }
-
-    return rating;
-
-}
 
 function printBookInfo(books){
 
@@ -287,10 +268,7 @@ function generateBooks(){
         const withinDateRange = dateAdded > dateLimit;
     
         // Already read?
-        const read = selectedBook[READ] !== "";
-
-        // Right rating?
-        const withinRating = selectedBook[RATING] >= determineRating(rating);
+        const read = selectedBook[READ] > 0;
 
         // Right number of pages?
         const withinPages = (selectedBook[NUMPAGES] >= numPagesMin) && (selectedBook[NUMPAGES] <= numPagesMax);
@@ -309,7 +287,7 @@ function generateBooks(){
         }
         const withinShelves = checkMandatoryShelves && checkShelves;
         
-        const meetsCriteria = withinDateRange && (!read) && withinRating && withinPages && withinShelves;
+        const meetsCriteria = withinDateRange && (!read) && withinPages && withinShelves;
 
         // Check if the book is within the specified criteria
         if(meetsCriteria && !bookArray.includes(selectedBook)){
@@ -347,7 +325,6 @@ function getCriteria(){
     let criteriaForm = document.forms["criteria"];
     numBooks = parseInt(criteriaForm["numBooks"].value); 
     timePeriod = document.getElementById("recency").innerHTML; 
-    rating = document.getElementById("rating").innerHTML;
 
     numPagesMin = parseInt(document.getElementById("slider-1").value);
     numPagesMax = parseInt(document.getElementById("slider-2").value);
@@ -365,7 +342,7 @@ function getCriteria(){
     }
 
     if(validateInputs()){
-        console.log("You passed: " + numBooks + ", " + timePeriod + ", " + rating + ", " + optionalShelves.toString() + ", num pages: " + numPagesMin + "-" + numPagesMax);
+        console.log("You passed: " + numBooks + ", " + timePeriod + ", " + optionalShelves.toString() + ", num pages: " + numPagesMin + "-" + numPagesMax);
         generateBooks();
     }
 
